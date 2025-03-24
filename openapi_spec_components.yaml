@@ -1,0 +1,120 @@
+# https://raw.githubusercontent.com/OAI/OpenAPI-Specification/refs/heads/main/schemas/v3.1/schema.yaml
+openapi: 3.0.3
+info:
+  title: API
+  version: "0.0.1"
+  description: User REST API
+
+components:
+  parameters:
+    QueryParamFilter:
+      name: filter
+      in: query
+      schema:
+        $ref: '#/components/schemas/QueryParamFilter'
+    QueryParamSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/QueryParamSort'
+    QueryParamPage:
+      name: page
+      in: query
+      schema:
+        $ref: '#/components/schemas/QueryParamPage'
+
+  schemas:
+    QueryParamFilter:
+      type: string
+      description: "Filter criteria in the format 'field=value'. Supported operators are '=', '!=', '>', '<', '>=', '<='"
+      example: "field=value"
+    QueryParamSort:
+      type: string
+      description: "Sort criteria in the format 'field:direction' or 'field'. Values for direction are ASC or DESC. If omitted, it defaults to ASC."
+      example: "field:DESC"
+    QueryParamPage:
+      type: string
+      description: "Paging criteria in the format 'pageNumber:pageSize' or 'pageNumber'; pageNumber is 0 offset."
+      example: "0:25"
+
+    UserCreate:
+      type: object
+      required: [ name, description ]
+      properties:
+        name:
+          $ref: '#/components/schemas/UserName'
+    User:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserId'
+        name:
+          $ref: '#/components/schemas/UserName'
+
+    UserId:
+      type: string
+      description: Unique base64 url-encoded identifier for a User.
+      minLength: 2
+    UserName:
+      type: string
+      description: Friendly name for a User.
+      example: Hello World
+      minLength: 1
+      maxLength: 63
+
+    HTTPError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+
+  responses:
+    HTTP400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP404:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP500:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP503:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    HTTP504:
+      description: Gateway Timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'

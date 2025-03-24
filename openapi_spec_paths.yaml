@@ -1,0 +1,72 @@
+# https://raw.githubusercontent.com/OAI/OpenAPI-Specification/refs/heads/main/schemas/v3.1/schema.yaml
+openapi: 3.0.3
+info:
+  title: API
+  version: "0.0.1"
+  description: User REST API
+servers:
+  - url: http://localhost:8080/
+paths:
+  /user:
+    post:
+      summary: Create a new User.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './openapi_spec_components.yaml#/components/schemas/UserCreate'
+      responses:
+        '200':
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: './openapi_spec_components.yaml#/components/schemas/User'
+        '400':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP400'
+        '401':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP401'
+        '403':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP403'
+        '404':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP404'
+        '429':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP429'
+        '500':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP500'
+        '503':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP503'
+        '504':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP504'
+    get:
+      summary: List all Users. Supports optional filtering, sorting, and paging.
+      parameters:
+        - $ref: "./openapi_spec_components.yaml#/components/parameters/QueryParamFilter"
+        - $ref: "./openapi_spec_components.yaml#/components/parameters/QueryParamSort"
+        - $ref: "./openapi_spec_components.yaml#/components/parameters/QueryParamPage"
+      responses:
+        '200':
+          description: A JSON array of 0 or more Users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './openapi_spec_components.yaml#/components/schemas/User'
+        '400':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP400'
+        '401':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP401'
+        '403':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP403'
+        '404':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP404'
+        '429':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP429'
+        '500':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP500'
+        '503':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP503'
+        '504':
+          $ref: './openapi_spec_components.yaml#/components/responses/HTTP504'
